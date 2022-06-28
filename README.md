@@ -1,10 +1,7 @@
-Title: robopower
-
-Mission: robocopy via powershell
-
-Author: Wolfgang Reidlinger
-
-Version: v1.0
+Title: robopower  
+Mission: robocopy via powershell  
+Author: Wolfgang Reidlinger  
+Version: v1.0  
 
 Documentation:
 * robocopy https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/robocopy
@@ -19,6 +16,6 @@ Structure:
 * robopower-logfile: logfile is writte to the same source as the ps1 file
 
 NEED to SET:
- 1. if you want to use the .ps1 file as a windows task you have to set this:
+ 1. if you want to use the .ps1 file as a windows task you have to set this:  
  "Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser"
  2. define the location of the .ps1 file in $script_location
