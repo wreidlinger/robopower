@@ -1,5 +1,5 @@
-Title: robopower 
-Mussion: robocopy via powershell
+Title: robopower
+Mission: robocopy via powershell
 Author: Wolfgang Reidlinger
 Version: v1.0
 
