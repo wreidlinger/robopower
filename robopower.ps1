@@ -3,17 +3,16 @@
 # get computername and write into variable
 $hostname = $env:ComputerName
 # define counter for unilog logfile name
-$count = 0
+$logfile_count = 0
 # need to set the location of the .ps1 file | write script location into variable
 $script_location = "D:\ADMIN\BACKUP\robopower-NAS"
 # write logfile
 "$(get-date -Format 'dd/MM/yyyy-HH:mm:ss') :: START robopower on $($hostname)" | Out-File "$($script_location)\robopower.log" -Append -Encoding ASCII
 
-
 Write-Host `r`n
 Write-Host "############################################################################"
-Write-Host "# Thanks for running robopower v1.0                                        #"
-Write-Host "# by Wolfgang Reidlinger, 2022                                             #"
+Write-Host "# Thanks for running robopower v1.1                                        #"
+Write-Host "# by Wolfgang Reidlinger | November, 2023                                  #"
 Write-Host "############################################################################"
 Write-Host `r`n
 Write-Host "****************************************************************************"
@@ -53,20 +52,23 @@ foreach($sources in $array_sources_input_file)
     # get date and write into variable
     $timestamp = (Get-Date -Format "dd-MM-yyyy")
     # increase +1 in every loop and write to variable which is later used in the logfile name
-    $count = $count+1
+    $logfile_count = $logfile_count+1
         
     # robocopy all sources to the destination
-    Robocopy.exe "$sources" "$destination\$sources_root_folders" /MIR /XA:H /W:1 /MT:32 /DCOPY:T /Z /NP /unilog:"$($script_location)\$($timestamp)-$($hostname)-robocopylog-0$($count).log"
-    # write robocopy-logfile into robopower-logfile
-    "$(get-date -Format 'dd/MM/yyyy-HH:mm:ss') :: LOGFILE: $($script_location)\$($timestamp)-$($hostname)-robocopylog-0$($count).log" | Out-File "$($script_location)\robopower.log" -Append -Encoding ASCII
-    # /MIR	Mirror a directory tree
-    # /XA:H makes Robocopy ignore hidden files, usually these will be system files that we're not interested in.
-    # /W:5 reduces the wait time between failures to 5 seconds instead of the 30 second default.
-    # /MT:32 Creates multi-threaded copies with n threads. n must be an integer between 1 and 128. The default value for n is 8. For better performance, redirect your output using /log option.
+    # ROBOCOPY SYNTAX <start>
+    # /MIR    Mirror a directory tree
+    # /XA:H    makes Robocopy ignore hidden files, usually these will be system files that we're not interested in.
+    # /W:5    reduces the wait time between failures to 5 seconds instead of the 30 second default.
+    # /MT:32    Creates multi-threaded copies with n threads. n must be an integer between 1 and 128. The default value for n is 8. For better performance, redirect your output using /log option.
     # /DCOPY:T :: COPY Directory Timestamps.
-    # /z	Copies files in restartable mode. In restartable mode, should a file copy be interrupted, Robocopy can pick up where it left off rather than re-copying the entire file.
-    # /NP	Specifies that the progress of the copying operation (the number of files or directories copied so far) will not be displayed.
-    # /unilog:<logfile>	Writes the status output to the log file as Unicode text (overwrites the existing log file).
+    # /z    Copies files in restartable mode. In restartable mode, should a file copy be interrupted, Robocopy can pick up where it left off rather than re-copying the entire file.
+    # /NP    Specifies that the progress of the copying operation (the number of files or directories copied so far) will not be displayed.
+    # ROBOCOPY SYNTAX <end>
+    # UNILOG SYNTAX
+    # /unilog:"<logfile>"	Writes the status output to the log file as Unicode text (overwrites the existing log file).
+    Robocopy.exe "$sources" "$destination\$sources_root_folders" /MIR /XA:H /W:1 /MT:32 /DCOPY:T /Z /NP /unilog:"$($script_location)\$($timestamp)-$($hostname)-robocopylog-0$($logfile_count).log"
+    # write robocopy-logfile into robopower-logfile
+    "$(get-date -Format 'dd/MM/yyyy-HH:mm:ss') :: LOGFILE: $($script_location)\$($timestamp)-$($hostname)-robocopylog-0$($logfile_count).log" | Out-File "$($script_location)\robopower.log" -Append -Encoding ASCII
 }
 
 # write logfile
