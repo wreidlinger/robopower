@@ -56,9 +56,9 @@ foreach($sources in $array_sources_input_file)
     $count = $count+1
         
     # robocopy all sources to the destination
-    Robocopy.exe "$sources" "$destination\$sources_root_folders" /MIR /XA:H /W:1 /MT:32 /DCOPY:T /Z /NP /unilog:"$($script_location)\robocopy-0$($count)-$($hostname)-$($timestamp).log"
+    Robocopy.exe "$sources" "$destination\$sources_root_folders" /MIR /XA:H /W:1 /MT:32 /DCOPY:T /Z /NP /unilog:"$($script_location)\$($timestamp)-$($hostname)-robocopylog-0$($count).log"
     # write robocopy-logfile into robopower-logfile
-    "$(get-date -Format 'dd/MM/yyyy-HH:mm:ss') :: LOGFILE: $($script_location)\robocopy-0$($count)-$($hostname)-$($timestamp).log" | Out-File "$($script_location)\robopower.log" -Append -Encoding ASCII
+    "$(get-date -Format 'dd/MM/yyyy-HH:mm:ss') :: LOGFILE: $($script_location)\$($timestamp)-$($hostname)-robocopylog-0$($count).log" | Out-File "$($script_location)\robopower.log" -Append -Encoding ASCII
     # /MIR	Mirror a directory tree
     # /XA:H makes Robocopy ignore hidden files, usually these will be system files that we're not interested in.
     # /W:5 reduces the wait time between failures to 5 seconds instead of the 30 second default.
