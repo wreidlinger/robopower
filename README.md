@@ -1,7 +1,7 @@
-Title: robopower  
+Title: robopower
 Mission: robocopy via powershell  
-Author: Wolfgang Reidlinger  
-Version: v1.0  
+Author: Wolfgang Reidlinger
+Version: v1.1
 
 Documentation:
 * robocopy https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/robocopy
