@@ -7,7 +7,7 @@ $logfile_count = 0
 # need to set the location of the .ps1 file | write script location into variable
 $script_location = "D:\ADMIN\BACKUP\robopower-NAS"
 # write logfile
-"$(get-date -Format 'dd/MM/yyyy-HH:mm:ss') :: START robopower on $($hostname)" | Out-File "$($script_location)\robopower.log" -Append -Encoding ASCII
+"$(get-date -Format 'dd/MM/yyyy-HH:mm:ss') :: START robopower on $($hostname)" | Out-File "$($script_location)\log\robopower.log" -Append -Encoding ASCII
 
 Write-Host `r`n
 Write-Host "############################################################################"
@@ -26,7 +26,7 @@ foreach($sources in $array_sources_input_file)
     # print all sources (absolute path) on shell
     Write-Host $($sources)
     # write all sources (absolute path) into logfile
-    "$(get-date -Format 'dd/MM/yyyy-HH:mm:ss') :: SOURCE: $($sources)" | Out-File "$($script_location)\robopower.log" -Append -Encoding ASCII
+    "$(get-date -Format 'dd/MM/yyyy-HH:mm:ss') :: SOURCE: $($sources)" | Out-File "$($script_location)\log\robopower.log" -Append -Encoding ASCII
     # print sources root folder (no path) (for debugging)
     #$sources_root_folders = Split-Path $sources -Leaf
     #Write-Host "Sources root folders:" $sources_root_folders
@@ -41,7 +41,7 @@ Write-Host "* Destination:                                                      
 Write-Host "****************************************************************************"
 Write-Host $destination
 # write destination into logfile
-"$(get-date -Format 'dd/MM/yyyy-HH:mm:ss') :: DESTINATION: $($destination)" | Out-File "$($script_location)\robopower.log" -Append -Encoding ASCII
+"$(get-date -Format 'dd/MM/yyyy-HH:mm:ss') :: DESTINATION: $($destination)" | Out-File "$($script_location)\log\robopower.log" -Append -Encoding ASCII
 
 # run robocopy for every source folder
 foreach($sources in $array_sources_input_file)
@@ -58,7 +58,7 @@ foreach($sources in $array_sources_input_file)
     # ROBOCOPY SYNTAX <start>
     # /MIR    Mirror a directory tree
     # /XA:H    makes Robocopy ignore hidden files, usually these will be system files that we're not interested in.
-    # /W:5    reduces the wait time between failures to 5 seconds instead of the 30 second default.
+    # /W:1    reduces the wait time between failures to 1 seconds instead of the 30 second default.
     # /MT:32    Creates multi-threaded copies with n threads. n must be an integer between 1 and 128. The default value for n is 8. For better performance, redirect your output using /log option.
     # /DCOPY:T :: COPY Directory Timestamps.
     # /z    Copies files in restartable mode. In restartable mode, should a file copy be interrupted, Robocopy can pick up where it left off rather than re-copying the entire file.
@@ -66,10 +66,10 @@ foreach($sources in $array_sources_input_file)
     # ROBOCOPY SYNTAX <end>
     # UNILOG SYNTAX
     # /unilog:"<logfile>"	Writes the status output to the log file as Unicode text (overwrites the existing log file).
-    Robocopy.exe "$sources" "$destination\$sources_root_folders" /MIR /XA:H /W:1 /MT:32 /DCOPY:T /Z /NP /unilog:"$($script_location)\$($timestamp)-$($hostname)-robocopylog-0$($logfile_count).log"
+    Robocopy.exe "$sources" "$destination\$sources_root_folders" /MIR /XA:H /W:1 /MT:32 /DCOPY:T /Z /NP /unilog:"$($script_location)\log\$($timestamp)-$($hostname)-robocopylog-0$($logfile_count).log"
     # write robocopy-logfile into robopower-logfile
-    "$(get-date -Format 'dd/MM/yyyy-HH:mm:ss') :: LOGFILE: $($script_location)\$($timestamp)-$($hostname)-robocopylog-0$($logfile_count).log" | Out-File "$($script_location)\robopower.log" -Append -Encoding ASCII
+    "$(get-date -Format 'dd/MM/yyyy-HH:mm:ss') :: LOGFILE: $($script_location)\log\$($timestamp)-$($hostname)-robocopylog-0$($logfile_count).log" | Out-File "$($script_location)\log\robopower.log" -Append -Encoding ASCII
 }
 
 # write logfile
-"$(get-date -Format 'dd/MM/yyyy-HH:mm:ss') :: END robopower on $($hostname)" | Out-File "$($script_location)\robopower.log" -Append -Encoding ASCII
+"$(get-date -Format 'dd/MM/yyyy-HH:mm:ss') :: END robopower on $($hostname)" | Out-File "$($script_location)\log\robopower.log" -Append -Encoding ASCII
