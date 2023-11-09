@@ -1,10 +1,12 @@
-# Title: robopower  
-# Mission: robocopy via powershell  
-# Author: Wolfgang Reidlinger  
-# Version: v1.1
+```
+Title: robopower  
+Mission: robocopy via powershell  
+Author: Wolfgang Reidlinger  
+Version: v1.1
+´´´
 
 # Documentation:
-* robocopy https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/robocopy
+- Microsoft robocopy: https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/robocopy
 
 # Function:
 Uses powershell to make the usage of robocopy even more pleasant. Define source/destination in txt files and script location in a variable and fire up. Makes backup task very simple and easy.
