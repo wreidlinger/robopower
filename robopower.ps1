@@ -6,6 +6,12 @@ $hostname = $env:ComputerName
 $logfile_count = 0
 # need to set the location of the .ps1 file | write script location into variable
 $script_location = "D:\ADMIN\BACKUP\robopower-NAS"
+# location where the log files are stored
+$log_location_local = "$($script_location)\log"
+# location where the log files are stored on the remote location
+$log_location_backup = "\\10.0.0.10\backup_server\\ADMINSTUFF\robopower\log"
+
+"$($script_location)\log\robopower.log"
 # write logfile
 "$(get-date -Format 'dd/MM/yyyy-HH:mm:ss') :: START robopower on $($hostname)" | Out-File "$($script_location)\log\robopower.log" -Append -Encoding ASCII
 
@@ -68,8 +74,11 @@ foreach($sources in $array_sources_input_file)
     # /unilog:"<logfile>"	Writes the status output to the log file as Unicode text (overwrites the existing log file).
     Robocopy.exe "$sources" "$destination\$sources_root_folders" /MIR /XA:H /W:1 /MT:32 /DCOPY:T /Z /NP /unilog:"$($script_location)\log\$($timestamp)-$($hostname)-robocopylog-0$($logfile_count).log"
     # write robocopy-logfile into robopower-logfile
-    "$(get-date -Format 'dd/MM/yyyy-HH:mm:ss') :: LOGFILE: $($script_location)\log\$($timestamp)-$($hostname)-robocopylog-0$($logfile_count).log" | Out-File "$($script_location)\log\robopower.log" -Append -Encoding ASCII
+    "$(get-date -Format 'dd/MM/yyyy-HH:mm:ss') :: LOGFILE: $($script_location)\log\$($timestamp)-$($hostname)_0$($logfile_count)_$(sources_root_folders).log" | Out-File "$($script_location)\log\robopower.log" -Append -Encoding ASCII
 }
 
 # write logfile
 "$(get-date -Format 'dd/MM/yyyy-HH:mm:ss') :: END robopower on $($hostname)" | Out-File "$($script_location)\log\robopower.log" -Append -Encoding ASCII
+
+# sync logfiles from the script location to the backup loacation
+Robocopy.exe "$log_location_local" "$log_location_backup" /MIR /XA:H /W:1 /MT:32 /DCOPY:T /Z /NP
