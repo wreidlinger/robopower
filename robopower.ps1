@@ -72,9 +72,9 @@ foreach($sources in $array_sources_input_file)
     # ROBOCOPY SYNTAX <end>
     # UNILOG SYNTAX
     # /unilog:"<logfile>"	Writes the status output to the log file as Unicode text (overwrites the existing log file).
-    Robocopy.exe "$sources" "$destination\$sources_root_folders" /MIR /XA:H /W:1 /MT:32 /DCOPY:T /Z /NP /unilog:"$($script_location)\log\$($timestamp)-$($hostname)-robocopylog-0$($logfile_count).log"
+    Robocopy.exe "$sources" "$destination\$sources_root_folders" /MIR /XA:H /W:1 /MT:32 /DCOPY:T /Z /NP /unilog:"$($script_location)\log\$($timestamp)-$($hostname)_0$($logfile_count)_$($sources_root_folders).log"
     # write robocopy-logfile into robopower-logfile
-    "$(get-date -Format 'dd/MM/yyyy-HH:mm:ss') :: LOGFILE: $($script_location)\log\$($timestamp)-$($hostname)_0$($logfile_count)_$(sources_root_folders).log" | Out-File "$($script_location)\log\robopower.log" -Append -Encoding ASCII
+    "$(get-date -Format 'dd/MM/yyyy-HH:mm:ss') :: LOGFILE: $($script_location)\log\$($timestamp)-$($hostname)_0$($logfile_count)_$($sources_root_folders).log" | Out-File "$($script_location)\log\robopower.log" -Append -Encoding ASCII
     # sync logfiles from the script location to the backup loacation
     Robocopy.exe "$log_location_local" "$log_location_backup" /MIR /XA:H /W:1 /MT:32 /DCOPY:T /Z /NP
 }
