@@ -19,7 +19,7 @@ Uses powershell to make the usage of robocopy even more pleasant. Define source/
 
 # NEED to SET:
  1. to run the ```.ps1``` file via powershell or to use it in a Microsoft scheduled task you have to change the **execution policy** first.  
- ```Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser```
+ ```Set-ExecutionPolicy -ExecutionPolicy Unrestricted -Scope CurrentUser```
  2. define the location of the ```.ps1``` file in ```$script_location```
  3. ```$log_location_backup``` -> define location of the logfiles at the backup destination
 
