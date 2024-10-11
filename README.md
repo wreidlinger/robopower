@@ -17,11 +17,19 @@ Uses powershell to make the usage of robocopy even more pleasant. Define source/
 * robocopy-logfile: unilog logfile is writte to ```$script_location\log```
 * robopower-logfile: logfile is writte to ```$script_location\log```
 
+# Windows Security Preparations
+1. to run the ```.ps1``` file via powershell or to use it in a Microsoft scheduled task you have to change the **execution policy** first.  
+```powershell
+Set-ExecutionPolicy -ExecutionPolicy Unrestricted -Scope CurrentUser
+```
+2. unblock the file - this command removes the "blocked" status of the file, which was added because it was downloaded or copied from another machine. After unblocking the file, you should be able to run it without getting the security warning again.
+```powershell
+Unblock-File -Path "C:\Users\user\path-to-the-file\robopower.ps1"
+```
+
 # NEED to SET:
- 1. to run the ```.ps1``` file via powershell or to use it in a Microsoft scheduled task you have to change the **execution policy** first.  
- ```Set-ExecutionPolicy -ExecutionPolicy Unrestricted -Scope CurrentUser```
- 2. define the location of the ```.ps1``` file in ```$script_location```
- 3. ```$log_location_backup``` -> define location of the logfiles at the backup destination
+ 1. define the location of the ```.ps1``` file in ```$script_location```
+ 2. ```$log_location_backup``` -> define location of the logfiles at the backup destination
 
 # TODO
 - check if \log directory is there, if not created!
