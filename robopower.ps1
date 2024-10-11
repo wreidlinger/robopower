@@ -49,6 +49,12 @@ Write-Host $destination
 # write destination into logfile
 "$(get-date -Format 'dd/MM/yyyy-HH:mm:ss') :: DESTINATION: $($destination)" | Out-File "$($script_location)\log\robopower.log" -Append -Encoding ASCII
 
+# print program progress
+Write-Host `r`n
+Write-Host "****************************************************************************"
+Write-Host "* Logs:                                                                    *"
+Write-Host "****************************************************************************"
+
 # run robocopy for every source folder
 foreach($sources in $array_sources_input_file)
 {
